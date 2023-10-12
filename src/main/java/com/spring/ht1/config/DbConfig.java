@@ -7,9 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class H2DbConfig {
+public class DbConfig {
 
 	@Bean
+	@ConditionalOnMissingBean
 	public DataSource dataSource() {
 		DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
 		dataSourceBuilder.driverClassName("org.h2.Driver");
@@ -19,9 +20,9 @@ public class H2DbConfig {
 		return dataSourceBuilder.build();
 	}
 
-	@Bean
-	@ConditionalOnMissingBean(name = "dataSource")
-	public DataSource conditionDataSource() {
+	@Bean(name = "dataSource")
+	@ConditionalOnMissingBean
+	public DataSource dataSource2() {
 		DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
 		dataSourceBuilder.driverClassName("org.h2.Driver");
 		dataSourceBuilder.url("jdbc:h2:mem:ht2");
