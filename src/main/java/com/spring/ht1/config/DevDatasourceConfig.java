@@ -5,16 +5,18 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
-public class DbConfig {
+@Profile("dev")
+public class DevDatasourceConfig {
 
 	@Bean
 	@ConditionalOnMissingBean
 	public DataSource dataSource() {
 		DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
 		dataSourceBuilder.driverClassName("org.h2.Driver");
-		dataSourceBuilder.url("jdbc:h2:mem:ht1");
+		dataSourceBuilder.url("jdbc:h2:mem:dev1");
 		dataSourceBuilder.username("admin");
 		dataSourceBuilder.password("superAdmin");
 		return dataSourceBuilder.build();
@@ -25,7 +27,7 @@ public class DbConfig {
 	public DataSource dataSource2() {
 		DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
 		dataSourceBuilder.driverClassName("org.h2.Driver");
-		dataSourceBuilder.url("jdbc:h2:mem:ht2");
+		dataSourceBuilder.url("jdbc:h2:mem:dev2");
 		dataSourceBuilder.username("admin");
 		dataSourceBuilder.password("superAdmin");
 		return dataSourceBuilder.build();
